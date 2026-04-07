@@ -13,8 +13,7 @@ systemctl enable docker
 usermod -aG docker ec2-user
 
 # eksctl
-ARCH=amd64
-PLATFORM=$$(uname -s)_$${ARCH}
+PLATFORM=Linux_amd64
 
 curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$${PLATFORM}.tar.gz"
 tar -xzf eksctl_$${PLATFORM}.tar.gz -C /tmp && rm eksctl_$${PLATFORM}.tar.gz
@@ -26,10 +25,8 @@ chmod +x ./kubectl
 cp kubectl /usr/local/bin/kubectl
 
 # kubens (part of kubectx)
-curl -sLO https://github.com/ahmetb/kubectx/releases/latest/download/kubens_linux_amd64.tar.gz
-tar -xzf kubens_linux_amd64.tar.gz -C /tmp
-sudo install -m 0755 /tmp/kubens /usr/local/bin/kubens
-rm -f kubens_linux_amd64.tar.gz
+curl -sLo /usr/local/bin/kubens https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens
+chmod +x /usr/local/bin/kubens
 
 # AWS CLI configure for ec2-user
 mkdir -p /home/ec2-user/.aws
@@ -53,4 +50,4 @@ chmod 600 /home/ec2-user/.aws/config
 cd /home/ec2-user
 sudo -u ec2-user git clone https://github.com/daws-88s/eksctl.git
 cd eksctl
-sudo -u ec2-user eksctl create cluster -f eks.yaml
+sudo -u ec2-user /usr/local/bin/eksctl create cluster -f eks.yaml

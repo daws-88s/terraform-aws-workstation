@@ -13,7 +13,7 @@ resource "aws_instance" "workstation" {
     # EBS volume tags
     tags = merge(
       {
-          Name = "${var.project}-${var.environment}-bastion"
+          Name = "${var.project}-${var.environment}-workstation"
       },
     local.common_tags
     )
@@ -21,7 +21,7 @@ resource "aws_instance" "workstation" {
 
   tags = merge(
     {
-        Name = "${var.project}-${var.environment}-bastion"
+        Name = "${var.project}-${var.environment}-workstation"
     },
     local.common_tags
   )
